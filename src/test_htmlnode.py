@@ -1,14 +1,26 @@
 import unittest
+from htmlnode import HTMLNode, LeafNode
 
-from htmlnode import HTMLNode
-
-class TestHtmlNode(unittest.TestCase):
-
-    def test_props_to_html(self):
-        node_w_whitespace = HTMLNode(tag='a', value='Click me', props={'href': 'https://www.example.com', 'target': '_blank'})
-
-        self.assertEqual(' href="https://www.example.com" target="_blank"', node_w_whitespace.props_to_html()
+class TestHTMLNode(unittest.TestCase):
+    def test_to_html_props(self):
+        node = HTMLNode(
+            "div",
+            "Hello, world!",
+            None,
+            {"class": "greeting", "href": "https://boot.dev"},
         )
+        self.assertEqual(
+            node.props_to_html(),
+            ' class="greeting" href="https://boot.dev"',
+        )
+
+    def test_to_html_no_children(self):
+        node = LeafNode(tag="p", value="Hello, world!")
+        self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
+
+    def test_to_html_no_tag(self):
+        node = LeafNode(None, value="Hello, world!")
+        self.assertEqual(node.to_html(), "Hello, world!")
 
 if __name__ == "__main__":
     unittest.main()
