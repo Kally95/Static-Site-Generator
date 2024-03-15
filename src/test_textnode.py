@@ -10,7 +10,8 @@ from textnode import (
     text_type_link,
 )
 
-from htmlnode import HTMLNode
+from htmlnode import LeafNode
+from textnode import text_node_to_html_node
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -34,6 +35,12 @@ class TestTextNode(unittest.TestCase):
             "This is a text node", text_type_italic, "https://www.boot.dev"
         )
         self.assertEqual(node, node2)
+
+    def test_repr(self):
+        node = TextNode("This is a text node", text_type_text, "https://www.boot.dev")
+        self.assertEqual(
+            "TextNode(This is a text node, text, https://www.boot.dev)", repr(node)
+        )
 
     def test_repr(self):
         node = TextNode("This is a text node", text_type_text, "https://www.boot.dev")
